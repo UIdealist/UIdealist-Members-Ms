@@ -61,14 +61,6 @@ docker.postgres:
 		-p 5432:5432 \
 		postgres
 
-# Redis cache for test purposes
-docker.redis:
-	docker run --rm -d \
-		--name ${APP_NAME}-redis \
-		--network ${NETWORK_NAME} \
-		-p 6379:6379 \
-		redis
-
 # Stop commands for containers
 docker.stop.fiber:
 	docker stop ${APP_NAME}
@@ -76,8 +68,5 @@ docker.stop.fiber:
 docker.stop.postgres:
 	docker stop ${APP_NAME}-postgres
 
-docker.stop.redis:
-	docker stop ${APP_NAME}-redis
-
-docker.run: docker.postgres docker.redis docker.fiber
-docker.stop: docker.stop.fiber docker.stop.postgres docker.stop.redis
+docker.run: docker.postgres docker.fiber
+docker.stop: docker.stop.fiber docker.stop.postgres
