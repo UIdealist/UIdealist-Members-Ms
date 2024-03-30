@@ -1,5 +1,5 @@
 # Common variables for this application
-APP_NAME = uidealist-auth-ms
+APP_NAME = uidealist-member-ms
 BUILD_DIR = $(PWD)/build
 MIGRATIONS_FOLDER = $(PWD)/platform/migrations
 DATABASE_URL=
@@ -42,7 +42,7 @@ docker.fiber.build:
 	docker build -t ${APP_NAME} .
 
 docker.fiber: docker.fiber.build
-	docker run --rm -d \
+	docker run -d \
 		--name ${APP_NAME} \
 		--network ${NETWORK_NAME} \
 		--env-file .env \
@@ -67,6 +67,9 @@ docker.stop.fiber:
 
 docker.stop.postgres:
 	docker stop ${APP_NAME}-postgres
+
+swag.generate:
+	swag init
 
 docker.run: docker.postgres docker.fiber
 docker.stop: docker.stop.fiber docker.stop.postgres

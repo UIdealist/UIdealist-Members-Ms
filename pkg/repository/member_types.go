@@ -2,11 +2,11 @@ package repository
 
 const (
 	// Member is a registered user
-	MemberIsUser string = "MEMBER_USER"
+	MEMBER_IS_USER string = "MEMBER_USER"
 
 	// Member represents a team
-	MemberIsTeam string = "MEMBER_TEAM"
+	MEMBER_IS_TEAM string = "MEMBER_TEAM"
 
 	// Member represents an anonymous user
-	MemberIsAnonymousUser string = "MEMBER_ANONYMOUS_USER"
+	MEMBER_IS_ANONYMOUS_USER string = "MEMBER_ANONYMOUS_USER"
 )

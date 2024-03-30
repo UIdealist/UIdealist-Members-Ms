@@ -30,7 +30,7 @@ func (team *Team) BeforeCreate(tx *gorm.DB) (err error) {
 	member := Member{
 		ID:           uuid.New().String(),
 		SubClassID:   team.ID,
-		SubClassType: repository.MemberIsUser,
+		SubClassType: repository.MEMBER_IS_TEAM,
 	}
 
 	// Reference member to user
@@ -42,23 +42,6 @@ func (team *Team) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
-type TeamRole struct {
-	// One-to-one relationship with Member table
-	ID   string `gorm:"primaryKey;column:team_role_id" json:"id"`
-	Name string `gorm:"column:team_role_name" json:"name" validate:"required;lte=45"`
-}
-
-func (t *TeamRole) TableName() string {
-	return "teamrole"
-}
-
-// Before creating the user, create its UUID and member
-func (t *TeamRole) BeforeCreate(tx *gorm.DB) (err error) {
-	// Create UUID
-	t.ID = uuid.New().String()
-	return
-}
-
 // Intermediary table for many-to-many relationship between Team and Member
 type TeamHasMember struct {
 	ID string `gorm:"primaryKey;column:team_mem_id" json:"id"`
@@ -67,15 +50,17 @@ type TeamHasMember struct {
 	TeamID string `gorm:"column:team_id" json:"teamId"`
 	Team   Team   `json:"team" gorm:"foreignKey:TeamID;references:ID"`
 
-	// One-to-many relationship with TeamRole table
-	TeamRoleID string   `gorm:"column:team_role_id" json:"teamRoleId"`
-	TeamRole   TeamRole `json:"teamRole" gorm:"foreignKey:TeamRoleID;references:ID"`
+	// One-to-many relationship with TeamRole table (external service)
+	TeamRoleID string `gorm:"column:team_role_id" json:"teamRoleId"`
 
 	// One-to-many relationship with Member table
 	MemberID string `gorm:"column:mem_id" json:"memId"`
 	Member   Member `json:"member" gorm:"foreignKey:MemberID;references:ID"`
 
 	TeamMemberName string `gorm:"column:team_mem_name" json:"memTeamName" validate:"lte=45"`
+
+	// marks this member as the owner of the team
+	TeamMemberIsOwner bool `gorm:"column:team_mem_is_owner" json:"memIsOwner"`
 }
 
 func (thm *TeamHasMember) TableName() string {

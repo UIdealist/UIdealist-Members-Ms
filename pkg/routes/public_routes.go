@@ -13,4 +13,7 @@ func PublicRoutes(a *fiber.App) {
 
 	// Routes for POST method:
 	route.Post("/user", controllers.CreateUser)
+	route.Post("/user/anonymous", controllers.CreateAnonymousUser)
+	route.Post("/team", controllers.CreateTeam)
+	route.Post("/team/members/add", controllers.AddTeamMember)
 }

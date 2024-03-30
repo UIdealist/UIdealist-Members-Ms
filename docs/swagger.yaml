@@ -1,4 +1,53 @@
 basePath: /api
+definitions:
+  crud.AnonymousUserCreate:
+    properties:
+      temp_name:
+        maxLength: 255
+        type: string
+    required:
+    - temp_name
+    type: object
+  crud.TeamAddMember:
+    properties:
+      member_id:
+        maxLength: 255
+        type: string
+      team_id:
+        maxLength: 255
+        type: string
+      user_id:
+        maxLength: 255
+        type: string
+    required:
+    - member_id
+    - team_id
+    - user_id
+    type: object
+  crud.TeamCreate:
+    properties:
+      team_name:
+        maxLength: 255
+        type: string
+      user_id:
+        maxLength: 255
+        type: string
+    required:
+    - team_name
+    - user_id
+    type: object
+  crud.UserCreate:
+    properties:
+      email:
+        maxLength: 255
+        type: string
+      username:
+        maxLength: 255
+        type: string
+    required:
+    - email
+    - username
+    type: object
 info:
   contact:
     email: edgardanielgd123@gmail.com
@@ -10,93 +59,18 @@ info:
   termsOfService: http://swagger.io/terms/
   version: "1.0"
 paths:
-  /v1/token/renew:
+  /v1/team:
     post:
       consumes:
       - application/json
-      description: Renew access and refresh tokens.
+      description: Create a new team
       parameters:
-      - description: Refresh token
+      - description: Team Data
         in: body
-        name: refresh_token
+        name: data
         required: true
         schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: renew access and refresh tokens
-      tags:
-      - Token
-  /v1/user/sign/in:
-    post:
-      consumes:
-      - application/json
-      description: Auth user and return access and refresh token.
-      parameters:
-      - description: User Email
-        in: body
-        name: email
-        required: true
-        schema:
-          type: string
-      - description: User Password
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-      summary: auth user and return access and refresh token
-      tags:
-      - User
-  /v1/user/sign/out:
-    post:
-      consumes:
-      - application/json
-      description: De-authorize user and delete refresh token from Redis.
-      produces:
-      - application/json
-      responses:
-        "204":
-          description: ok
-          schema:
-            type: string
-      security:
-      - ApiKeyAuth: []
-      summary: de-authorize user and delete refresh token from Redis
-      tags:
-      - User
-  /v1/user/sign/up:
-    post:
-      consumes:
-      - application/json
-      description: Create a new user.
-      parameters:
-      - description: User Username
-        in: body
-        name: username
-        required: true
-        schema:
-          type: string
-      - description: User Password
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/crud.TeamCreate'
       produces:
       - application/json
       responses:
@@ -104,7 +78,73 @@ paths:
           description: ok
           schema:
             type: string
-      summary: create a new user
+      summary: Create a new team
+      tags:
+      - Team
+  /v1/team/members/add:
+    post:
+      consumes:
+      - application/json
+      description: Add a member to a team
+      parameters:
+      - description: New member data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/crud.TeamAddMember'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      summary: Create a new team
+      tags:
+      - Team
+  /v1/user:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user given username and email
+      parameters:
+      - description: User data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/crud.UserCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      summary: Create a new user
+      tags:
+      - User
+  /v1/user/anonymous:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user given username
+      parameters:
+      - description: Anonymous User Data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/crud.AnonymousUserCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      summary: Create a new user
       tags:
       - User
 securityDefinitions:

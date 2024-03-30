@@ -15,14 +15,9 @@
     },
     "basePath": "/api",
     "paths": {
-        "/v1/token/renew": {
+        "/v1/team": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Renew access and refresh tokens.",
+                "description": "Create a new team",
                 "consumes": [
                     "application/json"
                 ],
@@ -30,131 +25,17 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Token"
+                    "Team"
                 ],
-                "summary": "renew access and refresh tokens",
+                "summary": "Create a new team",
                 "parameters": [
                     {
-                        "description": "Refresh token",
-                        "name": "refresh_token",
+                        "description": "Team Data",
+                        "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/user/sign/in": {
-            "post": {
-                "description": "Auth user and return access and refresh token.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "auth user and return access and refresh token",
-                "parameters": [
-                    {
-                        "description": "User Email",
-                        "name": "email",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "User Password",
-                        "name": "password",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/user/sign/out": {
-            "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "De-authorize user and delete refresh token from Redis.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "de-authorize user and delete refresh token from Redis",
-                "responses": {
-                    "204": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/user/sign/up": {
-            "post": {
-                "description": "Create a new user.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "create a new user",
-                "parameters": [
-                    {
-                        "description": "User Username",
-                        "name": "username",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "User Password",
-                        "name": "password",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/crud.TeamCreate"
                         }
                     }
                 ],
@@ -165,6 +46,178 @@
                             "type": "string"
                         }
                     }
+                }
+            }
+        },
+        "/v1/team/members/add": {
+            "post": {
+                "description": "Add a member to a team",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Team"
+                ],
+                "summary": "Create a new team",
+                "parameters": [
+                    {
+                        "description": "New member data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/crud.TeamAddMember"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user": {
+            "post": {
+                "description": "Create a new user given username and email",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "parameters": [
+                    {
+                        "description": "User data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/crud.UserCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/anonymous": {
+            "post": {
+                "description": "Create a new user given username",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "parameters": [
+                    {
+                        "description": "Anonymous User Data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/crud.AnonymousUserCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "crud.AnonymousUserCreate": {
+            "type": "object",
+            "required": [
+                "temp_name"
+            ],
+            "properties": {
+                "temp_name": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "crud.TeamAddMember": {
+            "type": "object",
+            "required": [
+                "member_id",
+                "team_id",
+                "user_id"
+            ],
+            "properties": {
+                "member_id": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "team_id": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "user_id": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "crud.TeamCreate": {
+            "type": "object",
+            "required": [
+                "team_name",
+                "user_id"
+            ],
+            "properties": {
+                "team_name": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "user_id": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "crud.UserCreate": {
+            "type": "object",
+            "required": [
+                "email",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 255
                 }
             }
         }

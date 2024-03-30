@@ -15,9 +15,7 @@ import (
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param username body string true "User Username"
-// @Param email body string true "User Email"
-// @Param password body string true "User Password"
+// @Param data body crud.UserCreate true "User data"
 // @Success 201 {string} status "ok"
 // @Router /v1/user [post]
 func CreateUser(c *fiber.Ctx) error {
@@ -69,11 +67,9 @@ func CreateUser(c *fiber.Ctx) error {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param username body string true "User Username"
-// @Param email body string true "User Email"
-// @Param password body string true "User Password"
+// @Param data body crud.AnonymousUserCreate true "Anonymous User Data"
 // @Success 201 {string} status "ok"
-// @Router /v1/user [post]
+// @Router /v1/user/anonymous [post]
 func CreateAnonymousUser(c *fiber.Ctx) error {
 	anUserRequest := &crud.AnonymousUserCreate{}
 

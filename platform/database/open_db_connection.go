@@ -43,7 +43,6 @@ func OpenDBConnection() {
 		&models.AnonymousUser{}, // AnonymousUser model
 		&models.Team{},          // Team model
 
-		&models.TeamRole{},      // TeamRole model
 		&models.TeamHasMember{}, // TeamHasMember model
 	)
 

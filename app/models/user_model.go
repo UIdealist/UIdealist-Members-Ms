@@ -32,7 +32,7 @@ func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
 	member := Member{
 		ID:           uuid.New().String(),
 		SubClassID:   user.ID,
-		SubClassType: repository.MemberIsUser,
+		SubClassType: repository.MEMBER_IS_USER,
 	}
 
 	// Reference member to user
@@ -67,7 +67,7 @@ func (anonymousUser *AnonymousUser) BeforeCreate(tx *gorm.DB) (err error) {
 	member := Member{
 		ID:           uuid.New().String(),
 		SubClassID:   anonymousUser.ID,
-		SubClassType: repository.MemberIsAnonymousUser,
+		SubClassType: repository.MEMBER_IS_ANONYMOUS_USER,
 	}
 
 	// Reference member to anonymous user
