@@ -55,7 +55,7 @@ func CreateUser(c *fiber.Ctx) error {
 	// Return status 201 and created user.
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"error": false,
-		"code":  repository.REGISTERED,
+		"code":  repository.USER_CREATED,
 		"msg":   nil,
 		"user":  user,
 	})
@@ -105,7 +105,7 @@ func CreateAnonymousUser(c *fiber.Ctx) error {
 	// Return status 201 and created user.
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"error": false,
-		"code":  repository.REGISTERED,
+		"code":  repository.USER_CREATED,
 		"msg":   nil,
 		"user":  user,
 	})

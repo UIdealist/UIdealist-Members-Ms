@@ -58,7 +58,39 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/team/members/add": {
+        "/v1/team/members": {
+            "get": {
+                "description": "Get all team members",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Team"
+                ],
+                "summary": "Get all team members",
+                "parameters": [
+                    {
+                        "description": "Team data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/crud.TeamListMembers"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Add a member to a team",
                 "consumes": [
@@ -70,7 +102,7 @@ const docTemplate = `{
                 "tags": [
                     "Team"
                 ],
-                "summary": "Create a new team",
+                "summary": "Add a member to a team",
                 "parameters": [
                     {
                         "description": "New member data",
@@ -84,6 +116,38 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a member from a team",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Team"
+                ],
+                "summary": "Create a new team",
+                "parameters": [
+                    {
+                        "description": "Old member data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/crud.TeamRemoveMember"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
                         "description": "ok",
                         "schema": {
                             "type": "string"
@@ -204,6 +268,45 @@ const docTemplate = `{
             ],
             "properties": {
                 "team_name": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "user_id": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "crud.TeamListMembers": {
+            "type": "object",
+            "required": [
+                "team_id",
+                "user_id"
+            ],
+            "properties": {
+                "team_id": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "user_id": {
+                    "type": "string",
+                    "maxLength": 255
+                }
+            }
+        },
+        "crud.TeamRemoveMember": {
+            "type": "object",
+            "required": [
+                "member_id",
+                "team_id",
+                "user_id"
+            ],
+            "properties": {
+                "member_id": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "team_id": {
                     "type": "string",
                     "maxLength": 255
                 },

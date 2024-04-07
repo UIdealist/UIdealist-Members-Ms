@@ -15,5 +15,7 @@ func PublicRoutes(a *fiber.App) {
 	route.Post("/user", controllers.CreateUser)
 	route.Post("/user/anonymous", controllers.CreateAnonymousUser)
 	route.Post("/team", controllers.CreateTeam)
-	route.Post("/team/members/add", controllers.AddTeamMember)
+	route.Post("/team/members", controllers.AddTeamMember)
+	route.Get("/team/members", controllers.GetTeamMembers)
+	route.Delete("/team/members", controllers.RemoveTeamMember)
 }

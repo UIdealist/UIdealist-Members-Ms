@@ -36,6 +36,34 @@ definitions:
     - team_name
     - user_id
     type: object
+  crud.TeamListMembers:
+    properties:
+      team_id:
+        maxLength: 255
+        type: string
+      user_id:
+        maxLength: 255
+        type: string
+    required:
+    - team_id
+    - user_id
+    type: object
+  crud.TeamRemoveMember:
+    properties:
+      member_id:
+        maxLength: 255
+        type: string
+      team_id:
+        maxLength: 255
+        type: string
+      user_id:
+        maxLength: 255
+        type: string
+    required:
+    - member_id
+    - team_id
+    - user_id
+    type: object
   crud.UserCreate:
     properties:
       email:
@@ -81,7 +109,49 @@ paths:
       summary: Create a new team
       tags:
       - Team
-  /v1/team/members/add:
+  /v1/team/members:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a member from a team
+      parameters:
+      - description: Old member data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/crud.TeamRemoveMember'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Create a new team
+      tags:
+      - Team
+    get:
+      consumes:
+      - application/json
+      description: Get all team members
+      parameters:
+      - description: Team data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/crud.TeamListMembers'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Get all team members
+      tags:
+      - Team
     post:
       consumes:
       - application/json
@@ -100,7 +170,7 @@ paths:
           description: ok
           schema:
             type: string
-      summary: Create a new team
+      summary: Add a member to a team
       tags:
       - Team
   /v1/user:
