@@ -46,7 +46,7 @@ docker.fiber: docker.fiber.build
 		--name ${APP_NAME} \
 		--network ${NETWORK_NAME} \
 		--env-file .env \
-		-p 5000:5000 \
+		-p 5002:5000 \
 		${APP_NAME}
 
 # Database for test purposes
