@@ -1,10 +1,13 @@
 package controllers
 
 import (
-	"idealist/app/crud"
-	"idealist/app/models"
-	"idealist/pkg/repository"
-	"idealist/platform/database"
+	"github.com/UIdealist/UIdealist-Members-Ms/app/crud"
+	"github.com/UIdealist/UIdealist-Members-Ms/app/models"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/repository"
+	"github.com/UIdealist/UIdealist-Members-Ms/platform/database"
+
+	accessconnectormodels "github.com/UIdealist/Uidealist-Access-Ms/app/crud"
+	accessconnector "github.com/UIdealist/Uidealist-Access-Ms/connector"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -74,6 +77,28 @@ func CreateTeam(c *fiber.Ctx) error {
 	// Create a new team member in database.
 	err = db.Create(&teamMember).Error
 	if err != nil {
+		// Return status 500 and database connection error.
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": true,
+			"code":  repository.DATABASE_ERROR,
+			"msg":   err.Error(),
+		})
+	}
+
+	// Grant creator admin access to the team
+	response, err := accessconnector.GrantAccess(
+		&accessconnectormodels.AccessList[string]{
+			Policies: []accessconnectormodels.Access[string]{
+				accessconnectormodels.Access[string]{
+					Subject: "member-" + user.MemberID,
+					Object:  "team-" + team.ID,
+					Action:  "admin",
+				},
+			},
+		},
+	)
+
+	if err != nil || response.Error {
 		// Return status 500 and database connection error.
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": true,

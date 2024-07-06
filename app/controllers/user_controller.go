@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"idealist/app/crud"
-	"idealist/app/models"
-	"idealist/pkg/repository"
-	"idealist/platform/database"
+	"github.com/UIdealist/UIdealist-Members-Ms/app/crud"
+	"github.com/UIdealist/UIdealist-Members-Ms/app/models"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/repository"
+	"github.com/UIdealist/UIdealist-Members-Ms/platform/database"
 
 	"github.com/gofiber/fiber/v2"
 )

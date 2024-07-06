@@ -1,8 +1,9 @@
 package database
 
 import (
-	"idealist/app/models"
 	"os"
+
+	"github.com/UIdealist/UIdealist-Members-Ms/app/models"
 
 	"gorm.io/gorm"
 )

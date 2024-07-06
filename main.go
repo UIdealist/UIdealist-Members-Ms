@@ -3,31 +3,30 @@ package main
 import (
 	"os"
 
-	"idealist/pkg/configs"
-	"idealist/pkg/middleware"
-	"idealist/pkg/routes"
-	"idealist/pkg/utils"
-	"idealist/platform/database"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/configs"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/middleware"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/routes"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/utils"
+	"github.com/UIdealist/UIdealist-Members-Ms/platform/database"
 
 	"github.com/gofiber/fiber/v2"
 
-	_ "idealist/docs" // load API Docs files (Swagger)
+	_ "github.com/UIdealist/UIdealist-Members-Ms/docs" // load API Docs files (Swagger)
 
 	_ "github.com/joho/godotenv/autoload" // load .env file automatically
+
+	accessconnector "github.com/UIdealist/Uidealist-Access-Ms/connector" // load access microservice connector
 )
 
-// @Idealist API
+// @UIdealist API
 // @version 1.0
-// @description Idealist project API Docs.
+// @description UIdealist Member project API Docs.
 // @termsOfService http://swagger.io/terms/
 // @contact.name API Support
 // @contact.email edgardanielgd123@gmail.com
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @BasePath /api
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
 func main() {
 	// Define Fiber config.
 	config := configs.FiberConfig()
@@ -37,6 +36,9 @@ func main() {
 
 	// Define a new Fiber app with config.
 	app := fiber.New(config)
+
+	// Initialize access microservice connector.
+	accessconnector.Init()
 
 	// Middlewares.
 	middleware.FiberMiddleware(app) // Register Fiber's middleware for app.
@@ -53,4 +55,5 @@ func main() {
 	} else {
 		utils.StartServerWithGracefulShutdown(app)
 	}
+
 }

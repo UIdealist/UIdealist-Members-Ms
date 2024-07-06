@@ -80,7 +80,7 @@ info:
   contact:
     email: edgardanielgd123@gmail.com
     name: API Support
-  description: Idealist project API Docs.
+  description: UIdealist Member project API Docs.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -217,9 +217,4 @@ paths:
       summary: Create a new user
       tags:
       - User
-securityDefinitions:
-  ApiKeyAuth:
-    in: header
-    name: Authorization
-    type: apiKey
 swagger: "2.0"

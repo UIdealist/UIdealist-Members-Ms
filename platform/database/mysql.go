@@ -2,10 +2,11 @@ package database
 
 import (
 	"fmt"
-	"idealist/pkg/utils"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/utils"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

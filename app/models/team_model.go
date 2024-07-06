@@ -1,7 +1,7 @@
 package models
 
 import (
-	"idealist/pkg/repository"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/repository"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

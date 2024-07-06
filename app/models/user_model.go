@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 
-	"idealist/pkg/repository"
+	"github.com/UIdealist/UIdealist-Members-Ms/pkg/repository"
 )
 
 // User model and variations definition (included anonymous users)

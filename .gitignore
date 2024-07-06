@@ -20,3 +20,5 @@ hosts.ini
 .env
 .env.*
 !.env.example
+
+.devbox

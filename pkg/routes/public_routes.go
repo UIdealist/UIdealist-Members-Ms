@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"idealist/app/controllers"
+	"github.com/UIdealist/UIdealist-Members-Ms/app/controllers"
 
 	"github.com/gofiber/fiber/v2"
 )
